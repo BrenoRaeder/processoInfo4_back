@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.api.arquivo.dtos.LivroResumidoDto;
+import com.api.arquivo.dtos.LoginDto;
 import com.api.arquivo.dtos.UsuarioDto;
 import com.api.arquivo.models.Livro;
 import com.api.arquivo.models.Usuario;
@@ -62,6 +63,31 @@ public class UsuarioService {
 		}
 		
 		return null;
+	}
+	
+	public UsuarioDto login(LoginDto login) {
+		List<Usuario> listaUsuario = usuarioRepository.findAll();
+		UsuarioDto usuario = new UsuarioDto();
+		
+		for(Usuario u : listaUsuario) {
+			if(u.getLogin().equals(login.getLogin())) {
+				usuario = modelMapper.map(u, UsuarioDto.class);
+				
+				List<LivroResumidoDto> listaLivroDto = new ArrayList<>();
+				for (Livro livro : u.getListaLivros()) {
+
+					LivroResumidoDto livroDto = modelMapper.map(livro, LivroResumidoDto.class);
+					listaLivroDto.add(livroDto);
+				}
+
+				usuario.setListaLivros(listaLivroDto);
+				
+				return usuario;
+			}	
+		}
+		
+		return null;
+		
 	}
 	
 	public Usuario saveUsuario(Usuario usuario) {

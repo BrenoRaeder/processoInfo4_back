@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.api.arquivo.dtos.LoginDto;
 import com.api.arquivo.dtos.UsuarioDto;
 import com.api.arquivo.models.Usuario;
 import com.api.arquivo.services.UsuarioService;
@@ -40,6 +41,27 @@ public class UsuarioController {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
 			return new ResponseEntity<>(usuarioResponse, HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/login")
+	public ResponseEntity<UsuarioDto> login(@RequestBody LoginDto login) {
+		
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		LoginDto login;
+//		
+//		try {
+//			login = objectMapper.readValue(loginJson, LoginDto.class);
+//		} catch(JsonProcessingException e) {
+//	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//		}
+		
+		UsuarioDto usuarioLogin = usuarioService.login(login);
+		
+		if(usuarioLogin == null) {
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+		} else {
+			return new ResponseEntity<>(usuarioLogin, HttpStatus.OK);
 		}
 	}
 	
