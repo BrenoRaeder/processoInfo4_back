@@ -1,6 +1,7 @@
 package com.api.arquivo.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -32,13 +33,30 @@ public class UsuarioService {
 		for (int i = 0; i < listaUsuario.size(); i++) {
 
 			List<LivroResumidoDto> listaLivroDto = new ArrayList<>();
+			
+			Integer totalPaginas =0;
+			
+			Date ultimoLivro = new Date();
+			if(listaUsuario.get(0).getListaLivros().size() > 1) {
+				ultimoLivro = listaUsuario.get(0).getListaLivros().get(0).getDataTermino();
+			}
+			
 			for (Livro livro : listaUsuario.get(i).getListaLivros()) {
 
 				LivroResumidoDto livroDto = modelMapper.map(livro, LivroResumidoDto.class);
 				listaLivroDto.add(livroDto);
+				
+				totalPaginas += livro.getQtdPaginas();
+				
+				totalPaginas += livro.getQtdPaginas();
+				if(ultimoLivro.before(livro.getDataTermino()))
+					ultimoLivro = livro.getDataTermino();
 			}
 
 			listaUsuarioDto.get(i).setListaLivros(listaLivroDto);
+			listaUsuarioDto.get(i).setTotalLivros(listaLivroDto.size());
+			listaUsuarioDto.get(i).setTotalPaginas(totalPaginas);
+			listaUsuarioDto.get(i).setUltimoLivro(ultimoLivro);
 		}
 
 		return listaUsuarioDto;
@@ -51,13 +69,27 @@ public class UsuarioService {
 			UsuarioDto usuarioDto = modelMapper.map(usuario, UsuarioDto.class);
 
 			List<LivroResumidoDto> listaLivroDto = new ArrayList<>();
+			
+			Integer totalPaginas =0;
+			Date ultimoLivro = new Date();
+			if(usuario.getListaLivros().size() > 1) {
+				ultimoLivro = usuario.getListaLivros().get(0).getDataTermino();
+			}
+			
 			for (Livro livro : usuario.getListaLivros()) {
 
 				LivroResumidoDto livroDto = modelMapper.map(livro, LivroResumidoDto.class);
 				listaLivroDto.add(livroDto);
+				
+				totalPaginas += livro.getQtdPaginas();
+				if(ultimoLivro.before(livro.getDataTermino()))
+					ultimoLivro = livro.getDataTermino();
 			}
 
 			usuarioDto.setListaLivros(listaLivroDto);
+			usuarioDto.setTotalLivros(listaLivroDto.size());
+			usuarioDto.setTotalPaginas(totalPaginas);
+			usuarioDto.setUltimoLivro(ultimoLivro);
 			
 			return usuarioDto;
 		}

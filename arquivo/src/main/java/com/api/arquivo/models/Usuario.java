@@ -33,6 +33,9 @@ public class Usuario {
 	@Column(name = "senha")
 	private String senha;
 
+	@Column(name = "imagem_usuario")
+	private String imagemUsuario;
+
 	@OneToMany(mappedBy = "usuario")
 	private List<Livro> listaLivros;
 
@@ -40,12 +43,14 @@ public class Usuario {
 		super();
 	}
 
-	public Usuario(Integer idUsuario, String nomeUsuario, String login, String senha, List<Livro> listaLivros) {
+	public Usuario(Integer idUsuario, String nomeUsuario, String login, String senha, String imagemUsusario,
+			List<Livro> listaLivros) {
 		super();
 		this.idUsuario = idUsuario;
 		this.nomeUsuario = nomeUsuario;
 		this.login = login;
 		this.senha = senha;
+		this.imagemUsuario = imagemUsusario;
 		this.listaLivros = listaLivros;
 	}
 
@@ -79,6 +84,14 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getImagemUsuario() {
+		return imagemUsuario;
+	}
+
+	public void setImagemUsuario(String imagemUsuario) {
+		this.imagemUsuario = imagemUsuario;
 	}
 
 	public List<Livro> getListaLivros() {
