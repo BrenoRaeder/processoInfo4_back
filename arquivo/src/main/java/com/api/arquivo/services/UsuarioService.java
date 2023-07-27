@@ -70,7 +70,7 @@ public class UsuarioService {
 		UsuarioDto usuario = new UsuarioDto();
 		
 		for(Usuario u : listaUsuario) {
-			if(u.getLogin().equals(login.getLogin())) {
+			if(u.getLogin().equals(login.getLogin()) && u.getSenha().equals(login.getSenha())) {
 				usuario = modelMapper.map(u, UsuarioDto.class);
 				
 				List<LivroResumidoDto> listaLivroDto = new ArrayList<>();

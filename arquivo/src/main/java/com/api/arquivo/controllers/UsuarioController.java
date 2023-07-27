@@ -44,27 +44,6 @@ public class UsuarioController {
 		}
 	}
 	
-	@GetMapping("/login")
-	public ResponseEntity<UsuarioDto> login(@RequestBody LoginDto login) {
-		
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		LoginDto login;
-//		
-//		try {
-//			login = objectMapper.readValue(loginJson, LoginDto.class);
-//		} catch(JsonProcessingException e) {
-//	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-//		}
-		
-		UsuarioDto usuarioLogin = usuarioService.login(login);
-		
-		if(usuarioLogin == null) {
-			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
-		} else {
-			return new ResponseEntity<>(usuarioLogin, HttpStatus.OK);
-		}
-	}
-	
 	@PostMapping
 	public ResponseEntity<Usuario> saveusuario(@RequestBody Usuario usuario) {
 		return new ResponseEntity<>(usuarioService.saveUsuario(usuario), HttpStatus.CREATED);
