@@ -37,8 +37,8 @@ public class UsuarioService {
 			Integer totalPaginas =0;
 			
 			Date ultimoLivro = new Date();
-			if(listaUsuario.get(0).getListaLivros().size() > 1) {
-				ultimoLivro = listaUsuario.get(0).getListaLivros().get(0).getDataTermino();
+			if(listaUsuario.get(i).getListaLivros().size() >= 1) {
+				ultimoLivro = listaUsuario.get(i).getListaLivros().get(0).getDataTermino();
 			}
 			
 			for (Livro livro : listaUsuario.get(i).getListaLivros()) {
@@ -72,7 +72,7 @@ public class UsuarioService {
 			
 			Integer totalPaginas =0;
 			Date ultimoLivro = new Date();
-			if(usuario.getListaLivros().size() > 1) {
+			if(usuario.getListaLivros().size() >= 1) {
 				ultimoLivro = usuario.getListaLivros().get(0).getDataTermino();
 			}
 			
